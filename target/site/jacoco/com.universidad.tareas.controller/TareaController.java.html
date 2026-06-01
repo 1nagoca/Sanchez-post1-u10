@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TareaController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">tareas</a> &gt; <a href="index.source.html" class="el_package">com.universidad.tareas.controller</a> &gt; <span class="el_source">TareaController.java</span></div><h1>TareaController.java</h1><pre class="source lang-java linenums">package com.universidad.tareas.controller;
+
+import com.universidad.tareas.exception.TareaNotFoundException;
+import com.universidad.tareas.model.Tarea;
+import com.universidad.tareas.service.TareaService;
+import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+/**
+ * Controlador REST para la entidad Tarea.
+ * Probado con @WebMvcTest en TareaControllerTest.
+ *
+ * @author Andres Felipe Jimenez Ramirez
+ */
+@RestController
+@RequestMapping(&quot;/api/tareas&quot;)
+public class TareaController {
+
+    private final TareaService service;
+
+<span class="fc" id="L25">    public TareaController(TareaService service) {</span>
+<span class="fc" id="L26">        this.service = service;</span>
+<span class="fc" id="L27">    }</span>
+
+    /** GET /api/tareas → lista todas las tareas */
+    @GetMapping
+    public List&lt;Tarea&gt; listar() {
+<span class="fc" id="L32">        return service.listarTodas();</span>
+    }
+
+    /** GET /api/tareas/{id} → busca tarea por ID, 404 si no existe */
+    @GetMapping(&quot;/{id}&quot;)
+    public ResponseEntity&lt;Tarea&gt; buscar(@PathVariable Long id) {
+<span class="fc" id="L38">        return ResponseEntity.ok(service.buscarPorId(id));</span>
+    }
+
+    /** POST /api/tareas → crea una tarea nueva, 201 Created */
+    @PostMapping
+    public ResponseEntity&lt;Tarea&gt; crear(@Valid @RequestBody Tarea tarea) {
+<span class="fc" id="L44">        Tarea creada = service.crear(tarea);</span>
+<span class="fc" id="L45">        return ResponseEntity.status(HttpStatus.CREATED).body(creada);</span>
+    }
+
+    /** PATCH /api/tareas/{id}/completar → marca la tarea como completada */
+    @PatchMapping(&quot;/{id}/completar&quot;)
+    public ResponseEntity&lt;Tarea&gt; completar(@PathVariable Long id) {
+<span class="fc" id="L51">        return ResponseEntity.ok(service.completar(id));</span>
+    }
+
+    /** DELETE /api/tareas/{id} → elimina la tarea, 204 No Content */
+    @DeleteMapping(&quot;/{id}&quot;)
+    public ResponseEntity&lt;Void&gt; eliminar(@PathVariable Long id) {
+<span class="fc" id="L57">        service.eliminar(id);</span>
+<span class="fc" id="L58">        return ResponseEntity.noContent().build();</span>
+    }
+
+    /** Manejador global: TareaNotFoundException → 404 Not Found */
+    @ExceptionHandler(TareaNotFoundException.class)
+    public ResponseEntity&lt;String&gt; handleNotFound(TareaNotFoundException ex) {
+<span class="fc" id="L64">        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());</span>
+    }
+
+    /** Manejador: IllegalArgumentException → 400 Bad Request */
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity&lt;String&gt; handleBadRequest(IllegalArgumentException ex) {
+<span class="nc" id="L70">        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

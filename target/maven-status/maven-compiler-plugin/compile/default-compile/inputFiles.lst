@@ -1,0 +1,6 @@
+/var/home/Alm/IdeaProjects/jimenez-post1-u10/src/main/java/com/universidad/tareas/service/TareaService.java
+/var/home/Alm/IdeaProjects/jimenez-post1-u10/src/main/java/com/universidad/tareas/TareasApplication.java
+/var/home/Alm/IdeaProjects/jimenez-post1-u10/src/main/java/com/universidad/tareas/model/Tarea.java
+/var/home/Alm/IdeaProjects/jimenez-post1-u10/src/main/java/com/universidad/tareas/controller/TareaController.java
+/var/home/Alm/IdeaProjects/jimenez-post1-u10/src/main/java/com/universidad/tareas/repository/TareaRepository.java
+/var/home/Alm/IdeaProjects/jimenez-post1-u10/src/main/java/com/universidad/tareas/exception/TareaNotFoundException.java

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TareaService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">tareas</a> &gt; <a href="index.source.html" class="el_package">com.universidad.tareas.service</a> &gt; <span class="el_source">TareaService.java</span></div><h1>TareaService.java</h1><pre class="source lang-java linenums">package com.universidad.tareas.service;
+
+import com.universidad.tareas.exception.TareaNotFoundException;
+import com.universidad.tareas.model.Tarea;
+import com.universidad.tareas.repository.TareaRepository;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
+/**
+ * Servicio con la lógica de negocio para Tarea.
+ * Clase bajo prueba en TareaServiceTest usando Mockito.
+ *
+ * @author Andres Felipe Jimenez Ramirez
+ */
+@Service
+public class TareaService {
+
+    private final TareaRepository repo;
+
+<span class="fc" id="L22">    public TareaService(TareaRepository repo) {</span>
+<span class="fc" id="L23">        this.repo = repo;</span>
+<span class="fc" id="L24">    }</span>
+
+    /**
+     * Crea una nueva tarea.
+     * Lanza IllegalArgumentException si el título es nulo o vacío.
+     */
+    @Transactional
+    public Tarea crear(Tarea tarea) {
+<span class="fc bfc" id="L32" title="All 4 branches covered.">        if (tarea.getTitulo() == null || tarea.getTitulo().isBlank()) {</span>
+<span class="fc" id="L33">            throw new IllegalArgumentException(&quot;El título no puede estar vacío&quot;);</span>
+        }
+<span class="fc" id="L35">        return repo.save(tarea);</span>
+    }
+
+    /**
+     * Busca una tarea por ID.
+     * Lanza TareaNotFoundException si no existe.
+     */
+    public Tarea buscarPorId(Long id) {
+<span class="fc" id="L43">        return repo.findById(id)</span>
+<span class="fc" id="L44">                .orElseThrow(() -&gt; new TareaNotFoundException(id));</span>
+    }
+
+    /**
+     * Marca una tarea como completada.
+     */
+    @Transactional
+    public Tarea completar(Long id) {
+<span class="fc" id="L52">        Tarea tarea = buscarPorId(id);</span>
+<span class="fc" id="L53">        tarea.setCompletada(true);</span>
+<span class="fc" id="L54">        return repo.save(tarea);</span>
+    }
+
+    /**
+     * Lista todas las tareas.
+     */
+    public List&lt;Tarea&gt; listarTodas() {
+<span class="nc" id="L61">        return repo.findAll();</span>
+    }
+
+    /**
+     * Lista tareas filtradas por estado de completitud.
+     */
+    public List&lt;Tarea&gt; listarPorEstado(boolean completada) {
+<span class="fc" id="L68">        return repo.findByCompletada(completada);</span>
+    }
+
+    /**
+     * Elimina una tarea por ID.
+     * Lanza TareaNotFoundException si no existe.
+     */
+    @Transactional
+    public void eliminar(Long id) {
+<span class="fc" id="L77">        buscarPorId(id); // valida existencia</span>
+<span class="fc" id="L78">        repo.deleteById(id);</span>
+<span class="fc" id="L79">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

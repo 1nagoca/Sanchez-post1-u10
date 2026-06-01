@@ -1,0 +1,6 @@
+com/universidad/tareas/controller/TareaController.class
+com/universidad/tareas/TareasApplication.class
+com/universidad/tareas/repository/TareaRepository.class
+com/universidad/tareas/service/TareaService.class
+com/universidad/tareas/model/Tarea.class
+com/universidad/tareas/exception/TareaNotFoundException.class

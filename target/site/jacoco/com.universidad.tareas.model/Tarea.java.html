@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Tarea.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">tareas</a> &gt; <a href="index.source.html" class="el_package">com.universidad.tareas.model</a> &gt; <span class="el_source">Tarea.java</span></div><h1>Tarea.java</h1><pre class="source lang-java linenums">package com.universidad.tareas.model;
+
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.time.LocalDateTime;
+
+/**
+ * Entidad JPA que representa una Tarea.
+ *
+ * @author Andres Felipe Jimenez Ramirez
+ * Programación Web - Unidad 10 - Post-Contenido 1
+ */
+@Entity
+@Table(name = &quot;tareas&quot;)
+public class Tarea {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @NotBlank(message = &quot;El título no puede estar vacío&quot;)
+    @Column(nullable = false)
+    private String titulo;
+
+    @Column
+    private String descripcion;
+
+<span class="fc" id="L30">    @Column(nullable = false)</span>
+    private boolean completada = false;
+
+    @CreationTimestamp
+    @Column(name = &quot;fecha_creacion&quot;, updatable = false)
+    private LocalDateTime fechaCreacion;
+
+    // Constructor vacío requerido por JPA
+<span class="fc" id="L38">    public Tarea() {}</span>
+
+<span class="fc" id="L40">    public Tarea(String titulo, String descripcion) {</span>
+<span class="fc" id="L41">        this.titulo = titulo;</span>
+<span class="fc" id="L42">        this.descripcion = descripcion;</span>
+<span class="fc" id="L43">    }</span>
+
+    // Getters y Setters
+<span class="fc" id="L46">    public Long getId() { return id; }</span>
+<span class="fc" id="L47">    public void setId(Long id) { this.id = id; }</span>
+
+<span class="fc" id="L49">    public String getTitulo() { return titulo; }</span>
+<span class="fc" id="L50">    public void setTitulo(String titulo) { this.titulo = titulo; }</span>
+
+<span class="fc" id="L52">    public String getDescripcion() { return descripcion; }</span>
+<span class="fc" id="L53">    public void setDescripcion(String descripcion) { this.descripcion = descripcion; }</span>
+
+<span class="fc" id="L55">    public boolean isCompletada() { return completada; }</span>
+<span class="fc" id="L56">    public void setCompletada(boolean completada) { this.completada = completada; }</span>
+
+<span class="fc" id="L58">    public LocalDateTime getFechaCreacion() { return fechaCreacion; }</span>
+<span class="fc" id="L59">    public void setFechaCreacion(LocalDateTime fechaCreacion) { this.fechaCreacion = fechaCreacion; }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>
